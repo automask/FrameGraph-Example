@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 
-if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE
-    "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-    CACHE STRING "")
-endif()
-
+# if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+# set(CMAKE_TOOLCHAIN_FILE
+# "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+# CACHE STRING "")
+# endif()
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 message(STATUS "TOOLCHAIN: ${CMAKE_TOOLCHAIN_FILE}")
 
 project(FrameGraphExample)
@@ -40,22 +40,25 @@ endif()
 
 include(FetchContent)
 
-FetchContent_Declare(
-  glad
-  GIT_REPOSITORY https://github.com/skaarj1989/glad.git
-  GIT_TAG gl)
-FetchContent_Declare(
-  FrameGraph
-  GIT_REPOSITORY https://github.com/skaarj1989/FrameGraph.git
-  GIT_TAG master)
-FetchContent_Declare(
-  Tracy
-  GIT_REPOSITORY https://github.com/wolfpld/tracy
-  GIT_TAG master)
+# FetchContent_Declare(
+# glad
+# GIT_REPOSITORY https://github.com/skaarj1989/glad.git
+# GIT_TAG gl)
+# FetchContent_Declare(
+# FrameGraph
+# GIT_REPOSITORY https://github.com/skaarj1989/FrameGraph.git
+# GIT_TAG master)
+# FetchContent_Declare(
+#   Tracy
+#   GIT_REPOSITORY https://github.com/wolfpld/tracy
+#   GIT_TAG master)
 
-FetchContent_MakeAvailable(glad)
-FetchContent_MakeAvailable(FrameGraph)
-FetchContent_MakeAvailable(Tracy)
+# FetchContent_MakeAvailable(glad)
+# FetchContent_MakeAvailable(FrameGraph)
+# FetchContent_MakeAvailable(Tracy)
+add_subdirectory(_deps/framegraph)
+add_subdirectory(_deps/glad)
+add_subdirectory(_deps/tracy)
 
 include(cmake/AddResources.cmake)
 add_resources(TARGET Shaders IN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders OUT_DIR shaders)
