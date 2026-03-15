@@ -106,7 +106,8 @@ void ImGuiRenderer::draw(const ImDrawData *drawData) {
             },
         });
 
-        const auto texture = reinterpret_cast<Texture *>(drawCmd.TextureId);
+        // const auto texture = reinterpret_cast<Texture *>(drawCmd.TextureId); // old version
+        const auto texture = reinterpret_cast<Texture *>(drawCmd.GetTexID()); // fix imgui 1.92
         if (texture != &m_font) m_renderContext.bindTexture(0, *texture);
 
         const auto indexOffset = globalIndexOffset + drawCmd.IdxOffset;
